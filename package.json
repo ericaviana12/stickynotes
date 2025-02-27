@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ericaviana12/sticknotes/issues"
   },
-  "homepage": "https://github.com/ericaviana12/sticknotes#readme"
+  "homepage": "https://github.com/ericaviana12/sticknotes#readme",
+  "devDependencies": {
+    "electron": "^34.3.0"
+  }
 }
