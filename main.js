@@ -3,11 +3,14 @@ console.log("Electron - Processo principal")
 // Importação dos recursos do framework
 // app -> aplicação
 // BrowserWindow -> criação da janela
-const { app, BrowserWindow } = require('electron/main')
+// nativeTheme está relacionado ao tema claro ou escuro (definir)
+const { app, BrowserWindow, nativeTheme} = require('electron/main')
 
 // Janela principal
 let win
 const createWindow = () => {
+  // definindo tema da janela claro ou escuro
+  nativeTheme.themeSource = 'dark'
   win = new BrowserWindow({
     width: 1010, // Largura
     height: 720, // Altura
