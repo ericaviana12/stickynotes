@@ -1,4 +1,4 @@
-onsole.log("Electron - Processo principal")
+console.log("Electron - Processo principal")
 
 // Importação dos recursos do framework
   // app -> Aplicação
@@ -92,6 +92,11 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+// IMPORTANTE! Desconectar do banco de dados quando a aplicação for finalizada
+app.on('before-quit', async () => {
+  await desconectar()
 })
 
 // Reduzir a verbosidade de logs não críticos (devtools)
