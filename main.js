@@ -1,12 +1,19 @@
-console.log("Electron - Processo principal")
+onsole.log("Electron - Processo principal")
 
 // Importação dos recursos do framework
-// app -> aplicação
-// BrowserWindow -> criação da janela
-// nativeTheme -> definir o tema claro, escuro ou padrão do sistema
-// Menu -> definir um menu personalizado
-// Shell -> Acessar links externos no navegador padrão
-const { app, BrowserWindow, nativeTheme, Menu, shell } = require('electron/main')
+  // app -> Aplicação
+  // BrowserWindow -> Criação da janela
+  // nativeTheme -> Definir o tema claro, escuro ou padrão do sistema
+  // Menu -> Definir um menu personalizado
+  // Shell -> Acessar links externos no navegador padrão
+  // ipcMain -> Permite estabelecer uma comunicação entre processos (IPC) main.js <=> renderer.js
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
+
+// Ativação do preload.js (importação do path (caminho))
+const path = require('node:path')
+
+// Importação ds métodos conectar e desconectar (módulo de conexão)
+const { conectar, desconectar } = require('./database.js')
 
 // Janela principal
 let win
@@ -20,7 +27,12 @@ const createWindow = () => {
     // resizable: false, // Maximizar
     // minimizable: false, // Minimizar
     // closable: false, // Fechar
-    // autoHideMenuBar: true // Esconder o menu do browser
+    // autoHideMenuBar: true, // Esconder o menu do browser
+
+    // Linhas abaixo para ativação do preload. Importado através da linha de Importação ds métodos conectar e desconectar (módulo de conexão)
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
   })
 
   // Carregar o menu personalizado
@@ -35,28 +47,37 @@ const createWindow = () => {
 // Janela sobre
 let about
 function aboutWindow() {
-  nativeTheme.themeSource='light'
+  nativeTheme.themeSource = 'light'
   // Obter a janela principal
   const mainWindow = BrowserWindow.getFocusedWindow()
   // Validação (se existir a janela principal)
   if (mainWindow) {
     about = new BrowserWindow({
-    width: 320, // Largura
-    height: 280, // Altura
-    autoHideMenuBar: true, // Esconder o menu do browser
-    resizable: false, // Maximizar
-    minimizable: false, // Minimizar
-    parent: mainWindow, // Estabelecer uma relação hierárquica entre janelas
-    modal: true // Criar uma janela modal
-  })
+      width: 320, // Largura
+      height: 280, // Altura
+      autoHideMenuBar: true, // Esconder o menu do browser
+      resizable: false, // Maximizar
+      minimizable: false, // Minimizar
+      parent: mainWindow, // Estabelecer uma relação hierárquica entre janelas
+      modal: true // Criar uma janela modal
+    })
   }
-  
+
   about.loadFile('./src/views/sobre.html')
 }
 
 // Inicialização da aplicação (assincronismo)
 app.whenReady().then(() => {
   createWindow()
+
+  // Melhor local para estebelecer a conexão com o banco de dados
+  // No MongoDb é mais eficiente manter uma única conexão aberta durante todo o tempo de vida do aplicativo e fechar a conexão e encerrar quando o aplicativo for finalizado
+  // ipcMain.on (receber mensagem)
+  // db-connect (rótulo da mensagem)
+ipcMain.on('db-connect', async (event) => {
+  // A linha abaixo estabelece a conexão com o banco de dados
+  await conectar()
+})
 
   // Só ativar a janela principal se nenhuma outra estiver ativa
   app.on('activate', () => {
@@ -115,6 +136,10 @@ const template = [
       },
       {
         type: 'separator'
+      },
+      {
+        label: 'Recarregar',
+        role: 'reload'
       },
       {
         label: 'DevTools',
