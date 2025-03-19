@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +8,42 @@
     <style>
         /* Estilos personalizados */
         body {
-            background-color: #ff932d;
+            background-color: #c7c7c7;
             font-family: sans-serif;
             text-align: center;
         }
+
         h1 {
             font-size: 1.2rem;
         }
+
         h2 {
             font-size: 1.2rem;
         }
-        p, ul {
+
+        p,
+        ul {
             font-size: 1rem;
             line-height: 1rem;
         }
+
+        button {
+            background-color: #fd8b1f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #cc0000;
+        }
+
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row">
@@ -41,5 +62,15 @@
             </div>
         </div>
     </div>
+
+    <button onclick="fecharPagina()">Fechar</button>
+
+    <script>
+        function fecharPagina() {
+            window.close();
+        }
+    </script>
+
 </body>
+
 </html>
