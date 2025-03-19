@@ -54,7 +54,7 @@ function aboutWindow() {
   if (mainWindow) {
     about = new BrowserWindow({
       width: 400, // Largura
-      height: 400, // Altura
+      height: 300, // Altura
       autoHideMenuBar: true, // Esconder o menu do browser
       resizable: false, // Maximizar
       minimizable: false, // Minimizar
