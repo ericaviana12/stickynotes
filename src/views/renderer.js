@@ -17,3 +17,10 @@ function obterData() {
 }
 
 document.getElementById('dataAtual').innerHTML = obterData()
+
+// Troca do ícone do banco de dados (status da conecão)
+// Uso da API do preload.js
+api.dbStatus((event, message) => {
+    // Teste de recebimento da mensagem
+    console.log(message)
+})

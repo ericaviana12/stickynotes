@@ -81,7 +81,7 @@ ipcMain.on('db-connect', async (event) => {
   setTimeout(() => {
     // Enviar ao renderizador a mensagem "conectado"
     // db-status (IPC - comunicação entre processos - autorizada pelo preload.js)
-    event.reply('de-status', "conectado")
+    event.reply('db-status', "conectado")
   }, 500) // 500ms = 0.5s
 })
 
