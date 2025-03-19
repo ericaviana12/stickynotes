@@ -23,4 +23,9 @@ document.getElementById('dataAtual').innerHTML = obterData()
 api.dbStatus((event, message) => {
     // Teste de recebimento da mensagem
     console.log(message)
+    if (message === "conectado") {
+        document.getElementById('iconeDB').src = "../public/img/dbon.png"
+    } else {
+        document.getElementById('iconeDB').src = "../public/img/dboff.png"
+    }
 })
