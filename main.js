@@ -100,15 +100,7 @@ function noteWindow() {
     })
   }
 
-  about.loadFile('./src/views/sobre.html')
-
-  // Recebimento da mensagem do renderizador da tela "sobre" para fechar a janela usando o botão Ok
-  ipcMain.on('about-exit', () => {
-    // Validação (se existir a janela e ela não estiver destruída, fechar)
-    if (about && !about.isDestroyed()) {
-      about.close()
-    }
-  })
+  about.loadFile('./src/views/nota.html')
 }
 
 // Inicialização da aplicação (assincronismo)
