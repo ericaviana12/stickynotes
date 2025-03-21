@@ -100,7 +100,7 @@ function noteWindow() {
     })
   }
 
-  about.loadFile('./src/views/nota.html')
+  note.loadFile('./src/views/nota.html')
 }
 
 // Inicialização da aplicação (assincronismo)
@@ -157,7 +157,7 @@ const template = [
       {
         label: 'Criar nota',
         accelerator: 'Ctrl+N',
-        // click: () => console.log("Teste")
+        click: () => noteWindow()
       },
       {
         type: 'separator'

@@ -63,7 +63,6 @@ footer p {
 }
 
 /** SOBRE **/
- 
 #sobre h3 {
     color: var(--cinza);
     font-weight: 500;
@@ -72,3 +71,5 @@ footer p {
 .container {
     padding: 15px;
 }
+
+/** NOTA **/
