@@ -72,4 +72,24 @@ footer p {
     padding: 15px;
 }
 
-/** NOTA **/
+/** JANELA NOVA NOTA **/
+.novaNota {
+    display: flex;
+    flex-direction: column;
+}
+
+.novaNota input {
+    width: 355px;
+    padding: 10px;
+    margin: 10px 0px 20px 0px;
+    border: 1px solid var(--cinza);
+    border-radius: 5px;
+}
+
+.novaNota select {
+    margin-top: 10px;
+    width: 150px;
+    padding: 7px;
+    border: 1px solid var(--cinza);
+    border-radius: 5px;
+}
