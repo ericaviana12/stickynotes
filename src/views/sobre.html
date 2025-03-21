@@ -4,72 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Impedir a execução de scripts externos -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
     <title>Sobre</title>
-    <style>
-        /* Estilos personalizados */
-        body {
-            background-color: #c7c7c7;
-            font-family: sans-serif;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 1.2rem;
-        }
-
-        h2 {
-            font-size: 1.2rem;
-        }
-
-        p,
-        ul {
-            font-size: 1rem;
-            line-height: 1rem;
-        }
-
-        button {
-            background-color: #fd8b1f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #cc0000;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1>Sticky Notes</h1>
-                <p>Notas adesivas interativas</p>
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Detalhes do Projeto</h2>
-                <p><strong>Versão:</strong> 1.0</p>
-                <p><strong>Licença:</strong> MIT</p>
-                <p><strong>Autor:</strong> Erica Viana</p>
-            </div>
-        </div>
+        <section id="sobre">
+            <h2>Sticky Notes</h2>
+            <h3>Notas adesivas interativas<h3>
+                    <p>Autor: Erica Viana</p>
+                    <p>Licença: MIT</p>
+                    <p>Versão: 1.0</p>
+                    <button type="button" onclick="fechar()">Ok</button>
+        </section>
     </div>
 
-    <button onclick="fecharPagina()">Fechar</button>
-
-    <script>
-        function fecharPagina() {
-            window.close();
-        }
-    </script>
+    <!-- Renderizador da tela sobre -->
+    <script src="rendererSobre.js"></script>
 
 </body>
 

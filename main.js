@@ -1,12 +1,12 @@
 console.log("Electron - Processo principal")
 
 // Importação dos recursos do framework
-  // app -> Aplicação
-  // BrowserWindow -> Criação da janela
-  // nativeTheme -> Definir o tema claro, escuro ou padrão do sistema
-  // Menu -> Definir um menu personalizado
-  // Shell -> Acessar links externos no navegador padrão
-  // ipcMain -> Permite estabelecer uma comunicação entre processos (IPC) main.js <=> renderer.js
+// app -> Aplicação
+// BrowserWindow -> Criação da janela
+// nativeTheme -> Definir o tema claro, escuro ou padrão do sistema
+// Menu -> Definir um menu personalizado
+// Shell -> Acessar links externos no navegador padrão
+// ipcMain -> Permite estabelecer uma comunicação entre processos (IPC) main.js <=> renderer.js
 const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
 
 // Ativação do preload.js (importação do path (caminho))
@@ -39,7 +39,6 @@ const createWindow = () => {
   // Atenção! Antes importar o recurso Menu
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 
-
   // Carregar o documento HTML na janela
   win.loadFile('./src/views/index.html')
 }
@@ -53,17 +52,63 @@ function aboutWindow() {
   // Validação (se existir a janela principal)
   if (mainWindow) {
     about = new BrowserWindow({
-      width: 350, // Largura
-      height: 350, // Altura
+      width: 300, // Largura
+      height: 300, // Altura
+      // Comentar as três linhas abaixo para verificar possíveis erros pelo DevTools
       autoHideMenuBar: true, // Esconder o menu do browser
       resizable: false, // Maximizar
       minimizable: false, // Minimizar
       parent: mainWindow, // Estabelecer uma relação hierárquica entre janelas
-      modal: true // Criar uma janela modal
+      modal: true, // Criar uma janela modal
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
   }
 
   about.loadFile('./src/views/sobre.html')
+
+  // Recebimento da mensagem do renderizador da tela "sobre" para fechar a janela usando o botão Ok
+  ipcMain.on('about-exit', () => {
+    // Validação (se existir a janela e ela não estiver destruída, fechar)
+    if (about && !about.isDestroyed()) {
+      about.close()
+    }
+  })
+}
+
+// Janela nota
+let note
+function noteWindow() {
+  nativeTheme.themeSource = 'light'
+  // Obter a janela principal
+  const mainWindow = BrowserWindow.getFocusedWindow()
+  // Validação (se existir a janela principal)
+  if (mainWindow) {
+    note = new BrowserWindow({
+      width: 400, // Largura
+      height: 270, // Altura
+      // Comentar as três linhas abaixo para verificar possíveis erros pelo DevTools
+      autoHideMenuBar: true, // Esconder o menu do browser
+      resizable: false, // Maximizar
+      minimizable: false, // Minimizar
+      parent: mainWindow, // Estabelecer uma relação hierárquica entre janelas
+      modal: true, // Criar uma janela modal
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
+    })
+  }
+
+  about.loadFile('./src/views/sobre.html')
+
+  // Recebimento da mensagem do renderizador da tela "sobre" para fechar a janela usando o botão Ok
+  ipcMain.on('about-exit', () => {
+    // Validação (se existir a janela e ela não estiver destruída, fechar)
+    if (about && !about.isDestroyed()) {
+      about.close()
+    }
+  })
 }
 
 // Inicialização da aplicação (assincronismo)
@@ -74,16 +119,18 @@ app.whenReady().then(() => {
   // No MongoDb é mais eficiente manter uma única conexão aberta durante todo o tempo de vida do aplicativo e fechar a conexão e encerrar quando o aplicativo for finalizado
   // ipcMain.on (receber mensagem)
   // db-connect (rótulo da mensagem)
-ipcMain.on('db-connect', async (event) => {
-  // A linha abaixo estabelece a conexão com o banco de dados
-  await conectar()
-  // Enviar ao rendereizador uma mensagem para trocar a imagem do ícone do status do banco de dados (criar um delay de 0.5s ou 1s para sincronização com a nuvem)
-  setTimeout(() => {
-    // Enviar ao renderizador a mensagem "conectado"
-    // db-status (IPC - comunicação entre processos - autorizada pelo preload.js)
-    event.reply('db-status', "conectado")
-  }, 500) // 500ms = 0.5s
-})
+  ipcMain.on('db-connect', async (event) => {
+    // A linha abaixo estabelece a conexão com o banco de dados e verifica se foi conectado com sucesso (return true)
+    const conectado = await conectar()
+    if (conectado) {
+      // Enviar ao rendereizador uma mensagem para trocar a imagem do ícone do status do banco de dados (criar um delay de 0.5s ou 1s para sincronização com a nuvem)
+      setTimeout(() => {
+        // Enviar ao renderizador a mensagem "conectado"
+        // db-status (IPC - comunicação entre processos - autorizada pelo preload.js)
+        event.reply('db-status', "conectado")
+      }, 500) // 500ms = 0.5s
+    }
+  })
 
   // Só ativar a janela principal se nenhuma outra estiver ativa
   app.on('activate', () => {
