@@ -14,6 +14,8 @@ ipcRenderer.send('db-connect')
 
 // Permissões para estabelecer a comunicação entre processos
 contextBridge.exposeInMainWorld('api', {
-    dbStatus: (message) => ipcRenderer.on('db-status', message),
-    aboutExit: () => ipcRenderer.send('about-exit')
+    // Frase antes do : -> função - Frase após o : -> rótulo da função
+    dbStatus: (message) => ipcRenderer.on('db-status', message), // Trocar o ícone de banco de dados conectado ou desconectado
+    aboutExit: () => ipcRenderer.send('about-exit'), // Botão para sair da tela "sobre"
+    createNote: (stickyNote) => ipcRenderer.send('create-note', stickyNote) // Envia para o main um objeto - manda a estrutura de dados para ser gravada no banco de dados
 })
