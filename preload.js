@@ -17,5 +17,6 @@ contextBridge.exposeInMainWorld('api', {
     // Frase antes do : -> função - Frase após o : -> rótulo da função
     dbStatus: (message) => ipcRenderer.on('db-status', message), // Trocar o ícone de banco de dados conectado ou desconectado
     aboutExit: () => ipcRenderer.send('about-exit'), // Botão para sair da tela "sobre"
-    createNote: (stickyNote) => ipcRenderer.send('create-note', stickyNote) // Envia para o main um objeto - manda a estrutura de dados para ser gravada no banco de dados
+    createNote: (stickyNote) => ipcRenderer.send('create-note', stickyNote), // Envia para o main um objeto - manda a estrutura de dados para ser gravada no banco de dados
+    resetForm: (args) => ipcRenderer.on('reset-form', args) // "args" Argumento Vazio
 })
