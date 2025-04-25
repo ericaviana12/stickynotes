@@ -203,7 +203,7 @@ const template = [
     submenu: [
       {
         label: 'Repositório',
-        click: () => shell.openExternal('https://github.com/professorjosedeassis/stickynotes')
+        click: () => shell.openExternal('https://github.com/ericaviana12/stickynotes')
       },
       {
         label: 'Sobre',
@@ -258,7 +258,20 @@ ipcMain.on('list-notes', async (event) => {
   } catch (error) {
     console.log(error)
   }
-}) 
+})
+
+// Atualização das notas na janela principal
+ipcMain.on('update-list', () => {
+  // Validação (se a janela principal exixtir e não tiver sido encerrada)
+  if (win && !win.isDestroyed()) {
+    // Enviar ao renderer.js um pedido para recarregar a página
+    win.webContents.send('main-reload')
+    // Enviar novamente um pedido para troca do ícone de status 
+    setTimeout(() => {
+      win.webContents.send('db-status', "conectado")
+    }, 200) // tempo para garantir que o renderer esteja pronto
+  }
+})
 
 // == Fim - CRUD Read ==============================
 // =================================================
