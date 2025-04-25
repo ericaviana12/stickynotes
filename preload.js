@@ -25,5 +25,6 @@ contextBridge.exposeInMainWorld('api', {
     listNotes: () => ipcRenderer.send('list-notes'), // Autorização do renderer enviar um pedido para o main.js
     renderNotes: (notes) => ipcRenderer.on('render-notes', notes), // Receber o objeto notes do main.js
     updateList: () => ipcRenderer.send('update-list'), // 
-    mainReload: (args) => ipcRenderer.on('main-reload', args) // 
+    mainReload: (args) => ipcRenderer.on('main-reload', args), // 
+    deleteNote: (id) => ipcRenderer.send('delete-note', id) // Enviar o ID para o main.js
 })

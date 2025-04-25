@@ -57,6 +57,7 @@ api.renderNotes((event, notes) => { // Recebe a massa de dados (pois é um vetor
         list.innerHTML += `
             <br>
             <li>
+                <p onclick="deleteNote('${n._id}')" id="x"> X <\p>
                 <p>${n._id}<\p>
                 <p>${n.texto}<\p>
                 <p>${n.cor}<\p>
@@ -68,12 +69,24 @@ api.renderNotes((event, notes) => { // Recebe a massa de dados (pois é um vetor
 // == Fim - CRUD Read ==============================
 // =================================================
 
-// =================================================================================
-// === Atualização das Notas =======================================================
+// =================================================
+// === Atualização das Notas =======================
 
 api.mainReload((args) => {
     location.reload()
 })
 
-// =================================================================================
-// === Fim - Atualização das notas =================================================
+// =================================================
+// === Fim - Atualização das notas =================
+
+
+// =================================================
+// == CRUD Delete ==================================
+
+function deleteNote(id) {
+    console.log(id) // Passo 1 -> Receber o ID da nota a ser excluída
+    api.deleteNote(id) // Passo 2 -> Enviar o ID da nota ao main.js
+}
+
+// == Fim - CRUD Delete ============================
+// =================================================
