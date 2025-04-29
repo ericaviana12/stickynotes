@@ -53,15 +53,15 @@ api.renderNotes((event, notes) => { // Recebe a massa de dados (pois é um vetor
     arrayNotes = renderNotes // Atribuir ao vetor o JSON recebido
     // Uso do laço forEach para percorrer o vetor e extrair os dados
     arrayNotes.forEach((n) => {
-        // Adição de tags <li> no documento index.html
-        list.innerHTML += `
-            <br>
-            <li>
-                <p onclick="deleteNote('${n._id}')" id="x"> X <\p>
-                <p>${n._id}<\p>
-                <p>${n.texto}<\p>
-                <p>${n.cor}<\p>
-            <\li>
+        // adição de tags <li> no documento index.html
+        // var(--${n.cor}) aplica a cor definida nas variáveis CSS. Atenção! É necessário usar o mesmo nome armazenado no banco e nas variáveis CSS
+        list.innerHTML += `           
+            <li class="card" style="background-color: var(--${n.cor});">
+                <p onclick="deleteNote('${n._id}')" id="x">X</p>
+                <p id="code">${n._id}</p>
+                <p>${n.texto}</p>
+                <p id="color">${n.cor}</p>
+            </li>
         `
     })
 })
