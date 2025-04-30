@@ -1,19 +1,7 @@
-/**
- * Processo de renderização do documento index.html
- */
-
-console.log("Processo de renderização")
-
-// Estratégia para renderizar (desenhar) as notas adesivas:
-// Usar uam lista para preencher de forma dinâmica os itens (notas)
-
-// Vetor global para manipular os dados do banco
 let arrayNotes = []
 
-// Captura do id da lista <ul> do documento index.html
 const list = document.getElementById('listNotes')
 
-// inserção da data no rodapé
 function getDate() {
     const date = new Date()
     const options = {
@@ -27,11 +15,7 @@ function getDate() {
 
 document.getElementById('currentDate').innerHTML = getDate()
 
-// Troca do ícone do banco de dados (status da conecão)
-// Uso da API do preload.js
 api.dbStatus((event, message) => {
-    // Teste de recebimento da mensagem
-    console.log(message)
     if (message === "conectado") {
         document.getElementById('iconDB').src = "../public/img/dbon.png"
     } else {
@@ -39,22 +23,12 @@ api.dbStatus((event, message) => {
     }
 })
 
-// =================================================
-// == CRUD Read ====================================
-
-// Passo 1: Enviar ao main.js um pedido para listar as notas
 api.listNotes()
 
-// Passo 5: Recebimento das notas via IPC e rendereização (desenho) das notas no documento index.html
-api.renderNotes((event, notes) => { // Recebe a massa de dados (pois é um vetor)
-    const renderNotes = JSON.parse(notes) // JSON.parse() -> Converte de string para JSON
-    console.log(renderNotes) // Teste de recebimento do passo 5
-    // Renderizar no index.html o conteúdo do array
-    arrayNotes = renderNotes // Atribuir ao vetor o JSON recebido
-    // Uso do laço forEach para percorrer o vetor e extrair os dados
+api.renderNotes((event, notes) => {
+    const renderNotes = JSON.parse(notes)
+    arrayNotes = renderNotes
     arrayNotes.forEach((n) => {
-        // adição de tags <li> no documento index.html
-        // var(--${n.cor}) aplica a cor definida nas variáveis CSS. Atenção! É necessário usar o mesmo nome armazenado no banco e nas variáveis CSS
         list.innerHTML += `           
             <li class="card" style="background-color: var(--${n.cor});">
                 <p onclick="deleteNote('${n._id}')" id="x">X</p>
@@ -66,27 +40,10 @@ api.renderNotes((event, notes) => { // Recebe a massa de dados (pois é um vetor
     })
 })
 
-// == Fim - CRUD Read ==============================
-// =================================================
-
-// =================================================
-// === Atualização das Notas =======================
-
 api.mainReload((args) => {
     location.reload()
 })
 
-// =================================================
-// === Fim - Atualização das notas =================
-
-
-// =================================================
-// == CRUD Delete ==================================
-
 function deleteNote(id) {
-    console.log(id) // Passo 1 -> Receber o ID da nota a ser excluída
-    api.deleteNote(id) // Passo 2 -> Enviar o ID da nota ao main.js
+    api.deleteNote(id)
 }
-
-// == Fim - CRUD Delete ============================
-// =================================================

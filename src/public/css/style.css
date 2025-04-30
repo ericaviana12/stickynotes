@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/** IMPORTAÇÃO DE FONTES OFF-LINE **/
 @font-face {
     font-family: "Fredoka";
     src: url("../Fredoka/Fredoka-VariableFont_wdth\,wght.ttf");
@@ -11,7 +10,6 @@ body {
     font-size: 1em;
 }
 
-/* VARIÁVEIS PARA AS CORES DAS NOTAS */
 :root {
     --amarelo: #fff68f;
     --azul: #add8e6;
@@ -22,7 +20,6 @@ body {
     --cinza: #6c757d;
 }
 
-/* CSS RESET */
 * {
     margin: 0;
     padding: 0;
@@ -34,7 +31,6 @@ body {
     padding: 15px;
 }
 
-/* BOTÕES */
 button {
     padding: 5px 15px;
     border: 1px solid var(--cinza);
@@ -45,14 +41,13 @@ button {
     right: 15px;
 }
 
-/** RODAPÉ **/
 footer {
     width: 100%;
     height: 45px;
     padding: 5px;
     background-color: var(--footer);
-    display: flex;   
-    justify-content: space-between;    
+    display: flex;
+    justify-content: space-between;
     position: fixed;
     bottom: 0;
 }
@@ -62,13 +57,11 @@ footer p {
     margin: 5px 0px 0px 5px;
 }
 
-/** SOBRE **/
 #sobre h3 {
     color: var(--cinza);
     font-weight: 500;
 }
 
-/** JANELA NOVA NOTA **/
 .novaNota {
     display: flex;
     flex-direction: column;
@@ -90,7 +83,6 @@ footer p {
     border-radius: 5px;
 }
 
-/* Notas */
 #code,
 #color {
     display: none;
