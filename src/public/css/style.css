@@ -67,10 +67,6 @@ footer p {
     color: var(--cinza);
     font-weight: 500;
 }
- 
-.container {
-    padding: 15px;
-}
 
 /** JANELA NOVA NOTA **/
 .novaNota {
